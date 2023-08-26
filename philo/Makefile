@@ -1,0 +1,42 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/21 12:59:57 by juhaamid          #+#    #+#              #
+#    Updated: 2023/08/25 17:37:33 by juhaamid         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = philo
+
+SRCS = philo.c \
+		utils.c \
+		setup.c \
+		routine.c \
+		utils2.c
+
+OBJS =  ${SRCS:.c=.o}
+
+CC = cc
+
+CFLGS = -Wall -Werror -Wextra -pthread -fsanitize=address -g3
+
+GREEN = \033[0;32m
+
+
+all: $(NAME)
+
+$(NAME): ${OBJS}
+		$(CC) $(CFLGS) $(OBJS) -o $(NAME)
+		@echo "$(GREEN) it compiled!!!$(\033[0m)" 
+
+clean:
+		rm -f ${OBJS}
+
+fclean: clean
+		rm -f ${NAME}
+
+re: fclean all
