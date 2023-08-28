@@ -6,7 +6,7 @@
 #    By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/21 12:59:57 by juhaamid          #+#    #+#              #
-#    Updated: 2023/08/25 17:37:33 by juhaamid         ###   ########.fr        #
+#    Updated: 2023/08/28 12:57:53 by juhaamid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS =  ${SRCS:.c=.o}
 
 CC = cc
 
-CFLGS = -Wall -Werror -Wextra -pthread -fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -pthread  -g3
 
 GREEN = \033[0;32m
 
@@ -30,7 +30,7 @@ GREEN = \033[0;32m
 all: $(NAME)
 
 $(NAME): ${OBJS}
-		$(CC) $(CFLGS) $(OBJS) -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 		@echo "$(GREEN) it compiled!!!$(\033[0m)" 
 
 clean:

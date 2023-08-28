@@ -6,24 +6,68 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:40:30 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/26 14:26:19 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:48:14 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "philo.h"
 
+int	kms(t_philo *philo)
+{
+	long long	elapsed_time;
+
+	elapsed_time = get_time() - philo->data->time;
+	if (pthread_mutex_lock(&philo->data->pop_mutex) != 0)
+		return (1);
+	if (philo->data->time_to_die < elapsed_time - philo->timeoflastmeal)
+	{
+		if (pthread_mutex_unlock(&philo->data->pop_mutex) != 0)
+			return (1);
+		if (pthread_mutex_lock(&philo->data->lock) != 0)
+				return (2);
+			if (philo->data->death == 1)
+			{
+				if (pthread_mutex_unlock(&philo->data->lock) != 0)
+					return (2);
+				return (true);
+			}
+			philo->data->death = 1;
+			if (pthread_mutex_unlock(&philo->data->lock) != 0)
+				return (2);
+			if (pthread_mutex_lock(&philo->data->print) != 0)
+				return (2);
+			printf(RED"%lld %d died\n",
+				get_time() - philo->data->time, philo->numphilo+ 1);
+			if (pthread_mutex_unlock(&philo->data->print) != 0)
+				return (2);
+		return (true);
+	}
+	if (pthread_mutex_unlock(&philo->data->pop_mutex) != 0)
+			return (1);
+	return (false);
+	
+}
+
 int	myusleep(int time, t_philo *philo)
 {
 	long long 	current_time;
 
 	current_time = get_time();
+	if (pthread_mutex_lock(&philo->data->lock) != 0)
+		return (1);
 	while (time > get_time() - current_time && philo->data->death == 0)
 	{
-		death(philo);
-		if (usleep(1) == -1)
+		if (pthread_mutex_unlock(&philo->data->lock) != 0)
+			return (1);
+		kms(philo);
+		if (usleep(100) == -1)
 			return (2);
+		if (pthread_mutex_lock(&philo->data->lock) != 0)
+			return (1);
 	}
+	if (pthread_mutex_unlock(&philo->data->lock) != 0)
+		return (1);
 	return (0);
 }
 
@@ -36,13 +80,13 @@ int	myusleep(int time, t_philo *philo)
 // 		usleep(10);
 // }
 
-void	status(t_philo *philo, char *s, int i)
-{
-	pthread_mutex_lock(&philo->data->lock);
-	printf("%lld %d %s\n", get_time() - philo->data->time, philo->numphilo, s);
-	if (i)
-		pthread_mutex_unlock(&philo->data->lock);
-}
+// void	status(t_philo *philo, char *s, int i)
+// {
+// 	pthread_mutex_lock(&philo->data->lock);
+// 	printf("%lld %d %s\n", get_time() - philo->data->time, philo->numphilo, s);
+// 	if (i)
+// 		pthread_mutex_unlock(&philo->data->lock);
+// }
 
 // int	inputchecker(int ac, char **av)
 // {

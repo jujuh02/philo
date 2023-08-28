@@ -6,7 +6,7 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 15:13:51 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/26 15:00:26 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:42:11 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_free(t_data *all)
 	i = -1;
 	
 	pthread_mutex_destroy(&all->lock);
-	pthread_mutex_destroy(&all->meal_mutex);
-	pthread_mutex_destroy(&all->meal_count_mutex);
+	// pthread_mutex_destroy(&all->meal_mutex);
+	// pthread_mutex_destroy(&all->meal_count_mutex);
 	while (++i < all->number_of_philosophers)
 	{
 		pthread_mutex_destroy(&all->fork[i]);

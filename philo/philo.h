@@ -6,7 +6,7 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 08:48:28 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/26 15:49:33 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:36:41 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdbool.h>
 
 # define GRAB_FORK  0
+# define GRAB_FORKL 5
 # define EAT		1
 # define SLEEP		2
 # define THINK		3
@@ -51,7 +53,8 @@ typedef struct s_data
 	int					death;
 	long long			time;
 	int					*sign;
-	pthread_mutex_t		meal_mutex;
+	int					*avail;
+	pthread_mutex_t		pop_mutex;
 	pthread_mutex_t		meal_count_mutex;
 	
 }t_data;
@@ -73,6 +76,7 @@ void	instructions(void);
 int		inputchecker(char **av);
 void	status(t_philo *philo, char *s, int i);
 int	myusleep(int time, t_philo *philo);
+int	kms(t_philo *philo);
 
 // *************setup file***************//
 // t_data	*settable(char **av);
@@ -89,7 +93,7 @@ int	think(t_philo *philo);
 int	ft_unlock_and_join(t_data *table, pthread_t *pthread);
 int	ft_handle_lonely_philo(t_philo *philo);
 int	ft_loop_main_thread(t_data *table);
-
+int	take_forks(t_philo *philo, int i);
 // *************utils2 file****************//
 int is_dead(t_data *table);
 int	ft_routine_is_finished(t_data *table);
