@@ -6,7 +6,7 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 08:48:28 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/28 13:36:41 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/29 10:58:49 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ long	long	get_time(void);
 // ***********utils file************//
 int		ft_atoi(const char *nptr);
 void	instructions(void);
-int		inputchecker(char **av);
+int		inputchecker(int ac, char **av);
 void	status(t_philo *philo, char *s, int i);
 int	myusleep(int time, t_philo *philo);
 int	kms(t_philo *philo);
@@ -98,6 +98,6 @@ int	take_forks(t_philo *philo, int i);
 int is_dead(t_data *table);
 int	ft_routine_is_finished(t_data *table);
 int	ft_print_state_change(t_philo *philo, int state);
-void	*death(t_philo *philo);
+int	ft_isalpha(int c);
 
 #endif

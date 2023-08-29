@@ -6,7 +6,7 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 15:13:51 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/28 11:42:11 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:11:46 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	ft_free(t_data *all)
 	i = -1;
 	
 	pthread_mutex_destroy(&all->lock);
-	// pthread_mutex_destroy(&all->meal_mutex);
-	// pthread_mutex_destroy(&all->meal_count_mutex);
+	pthread_mutex_destroy(&all->pop_mutex);
+	pthread_mutex_destroy(&all->print);
 	while (++i < all->number_of_philosophers)
 	{
+		// free(all->sign[i]);
+		// free(all->avail[i]);
+		// free(all->philo[i]);
 		pthread_mutex_destroy(&all->fork[i]);
 	}
 	free(all);
@@ -51,8 +54,12 @@ int main(int ac, char **av)
 		printf(RED"Wrong num of arguments :( \n");
 		return (1);
 	}
-	// if (!inputchecker(av))
-	//     instructions();
+	if (inputchecker(ac, av) == 1)
+	{
+		// printf("pop");
+		instructions();
+		return(1);
+	} 
 	if (settable(av, table) != 0)
 	{
 		free(table);

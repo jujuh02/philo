@@ -6,7 +6,7 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:40:30 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/28 13:48:14 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:14:25 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	myusleep(int time, t_philo *philo)
 		if (pthread_mutex_unlock(&philo->data->lock) != 0)
 			return (1);
 		kms(philo);
-		if (usleep(100) == -1)
+		if (usleep(1000) == -1)
 			return (2);
 		if (pthread_mutex_lock(&philo->data->lock) != 0)
 			return (1);
@@ -71,22 +71,36 @@ int	myusleep(int time, t_philo *philo)
 	return (0);
 }
 
-// void	myusleep(int time)
-// {
-// 	long long	t;
+int	argv_alphabet(char **av)
+{
+	int	a;
+	int	b;
 
-// 	t = get_time();
-// 	while (get_time() - t < (long int)time)
-// 		usleep(10);
-// }
+	a = 1;
+	b = 0;
+	while (av[a])
+	{
+		b = 0;
+		while (av[a][b])
+		{
+			if (ft_isalpha(av[a][b]))
+				return (1);
+			b++;
+		}
+		a++;
+	}
+	return (0);
+}
 
-// void	status(t_philo *philo, char *s, int i)
-// {
-// 	pthread_mutex_lock(&philo->data->lock);
-// 	printf("%lld %d %s\n", get_time() - philo->data->time, philo->numphilo, s);
-// 	if (i)
-// 		pthread_mutex_unlock(&philo->data->lock);
-// }
+
+int	inputchecker(int ac, char **av)
+{
+	(void)ac;
+	if (argv_alphabet(av) == 1)
+		return (1);
+	return (0);
+}
+
 
 // int	inputchecker(int ac, char **av)
 // {
@@ -94,6 +108,8 @@ int	myusleep(int time, t_philo *philo)
 // 	int k;
 	
 // 	i = 1;
+// 	if (argv_alphabet(av) == 1)
+// 		return(1);
 // 	while (i < ac)
 // 	{
 // 		k = 0;
@@ -108,22 +124,22 @@ int	myusleep(int time, t_philo *philo)
 // 	return (0);
 // }
 
-int	inputchecker(char **av)
-{
-	int	i;
+// int	inputchecker(char **av)
+// {
+// 	int	i;
 
-	i = 1;
-	while (av[i])
-	{
-		if (ft_atoi(av[i]) <= 0)
-		{
-			printf("eh eh");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+// 	i = 1;
+// 	while (av[i])
+// 	{
+// 		if (ft_atoi(av[i]) <= 0)
+// 		{
+// 			printf("eh eh");
+// 			return (1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 
 int	ft_atoi(const char *nptr)
@@ -160,6 +176,6 @@ void	instructions(void)
 	printf(RED "\n                 UH OH :-(      \n");
 	printf(RED "             WRONG INPUT-> TRY:\n");
 	printf(GREEN "./philo || # of philos || timetodie || timetoeat || ");
-	printf(GREEN "timetosleep || # of timesphiloeats\n");
+	printf(GREEN "timetosleep || --->> (OPTIONAL) # of timesphiloeats\n");
 	printf(GREEN "\nexample: ./philo 3 400 200 200 3\n");
 }

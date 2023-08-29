@@ -6,43 +6,11 @@
 /*   By: juhaamid <juhaamid@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:46:53 by juhaamid          #+#    #+#             */
-/*   Updated: 2023/08/28 13:41:46 by juhaamid         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:53:13 by juhaamid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
-/* thread to check continuously if the philosopher is dead */
-// void	*death(t_philo *philo)
-// {
-	// int		time;
-
-	// while (philo->data->death == 0)
-	// {
-	// 	pthread_mutex_lock(&philo->data->meal_count_mutex);
-	// 	if (!(philo->meal < philo->data->number_of_times_each_philosopher_must_eat
-	// 			|| !philo->data->number_of_times_each_philosopher_must_eat))
-	// 	{
-	// 		pthread_mutex_unlock(&philo->data->meal_count_mutex);
-	// 		return (NULL);
-	// 	}
-	// 	pthread_mutex_unlock(&philo->data->meal_count_mutex);
-	// 	return (NULL);
-	// 	pthread_mutex_lock(&philo->data->meal_mutex);
-	// 	printf("passed\n");
-	// 	time = get_time() - philo->timeoflastmeal;
-	// 	printf("%d\n", time);
-	// 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	// 	if (time > philo->data->time_to_die)
-	// 	{
-	// 		ft_print_state_change(philo, DIE);
-	// 		philo->data->death = 1;
-	// 		return (NULL);
-	// 	}
-	// }
-// 	return (NULL);
-// }
 
 
 int	ft_print_state_change(t_philo *philo, int state)
@@ -122,8 +90,7 @@ int	ft_routine_is_finished(t_data *table)
 
 int is_dead(t_data *table)
 {
-	int				i;
-	
+	int	i;
 
 	i = -1;
 	while (++i < table->number_of_philosophers)
@@ -132,4 +99,12 @@ int is_dead(t_data *table)
 			return (1);
 	}
 	return (0);
+}
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
 }
